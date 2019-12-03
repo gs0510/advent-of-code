@@ -29,12 +29,12 @@ let execute arr index =
 
 let rec gravity_assist arr index=
 	match arr.(index) with
-	| 99 -> arr.(0)
-	| _ -> execute arr index; gravity_assist arr (index+4) 
+	| 1 | 2 -> execute arr index; gravity_assist arr (index+4)
+	| _ ->  arr.(0)
 ;; 
 
 let setup val1 val2=
-	let arr = parsed_input in
+	let arr = Array.copy parsed_input in
 	arr.(1) <- val1;
 	arr.(2) <- val2;
 	arr
@@ -52,9 +52,8 @@ let rec find_inputs noun verb =
 	match output with
 	| 19690720 -> (100*noun + verb)
 	| _ -> 
-		let len = Array.length (setup noun verb) in
-		if verb <= len then (find_inputs noun (verb+1))
-		else if noun <= len  then (find_inputs (noun+1) 0)
+		if verb <= 99 then (find_inputs noun (verb+1))
+		else if noun <= 99  then (find_inputs (noun+1) 0)
 		else raise(Foo "no combination!")
 ;;
 
